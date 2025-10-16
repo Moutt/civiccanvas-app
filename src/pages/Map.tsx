@@ -1,11 +1,53 @@
-import { MapPin } from "lucide-react";
+import { MapPin, Calendar, ThumbsUp } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
 const mockMarkers = [
-  { id: 1, lat: 50, lng: 30, title: "Buraco na rua" },
-  { id: 2, lat: 35, lng: 15, title: "Iluminação" },
-  { id: 3, lat: 60, lng: 70, title: "Lixo acumulado" },
-  { id: 4, lat: 70, lng: 50, title: "Calçada quebrada" },
-  { id: 5, lat: 80, lng: 85, title: "Semáforo quebrado" },
+  { 
+    id: 1, 
+    lat: 50, 
+    lng: 30, 
+    title: "Buraco na rua",
+    description: "Buraco grande na Rua Matilde, altura do nº 234",
+    date: "Reportado há 2 dias",
+    likes: 12
+  },
+  { 
+    id: 2, 
+    lat: 35, 
+    lng: 15, 
+    title: "Iluminação deficiente",
+    description: "Poste apagado na Praça Central",
+    date: "Reportado há 1 dia",
+    likes: 8
+  },
+  { 
+    id: 3, 
+    lat: 60, 
+    lng: 70, 
+    title: "Lixo acumulado",
+    description: "Acúmulo de lixo na esquina da Av. Principal",
+    date: "Reportado há 5 horas",
+    likes: 15
+  },
+  { 
+    id: 4, 
+    lat: 70, 
+    lng: 50, 
+    title: "Calçada quebrada",
+    description: "Calçada danificada em frente ao mercado",
+    date: "Reportado há 3 dias",
+    likes: 6
+  },
+  { 
+    id: 5, 
+    lat: 80, 
+    lng: 85, 
+    title: "Semáforo quebrado",
+    description: "Sinal não funciona no cruzamento",
+    date: "Reportado há 1 hora",
+    likes: 20
+  },
 ];
 
 const Map = () => {
@@ -35,16 +77,36 @@ const Map = () => {
           
           {/* Issue markers */}
           {mockMarkers.map((marker) => (
-            <div
-              key={marker.id}
-              className="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-110 transition-transform"
-              style={{
-                top: `${marker.lat}%`,
-                left: `${marker.lng}%`,
-              }}
-            >
-              <MapPin className="w-8 h-8 text-destructive fill-destructive drop-shadow-lg" />
-            </div>
+            <Popover key={marker.id}>
+              <PopoverTrigger asChild>
+                <div
+                  className="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-110 transition-transform"
+                  style={{
+                    top: `${marker.lat}%`,
+                    left: `${marker.lng}%`,
+                  }}
+                >
+                  <MapPin className="w-8 h-8 text-destructive fill-destructive drop-shadow-lg" />
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-lg">{marker.title}</h3>
+                  <p className="text-sm text-muted-foreground">{marker.description}</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="w-3 h-3" />
+                    <span>{marker.date}</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t">
+                    <div className="flex items-center gap-1 text-sm">
+                      <ThumbsUp className="w-4 h-4" />
+                      <span>{marker.likes} apoios</span>
+                    </div>
+                    <Button size="sm" variant="outline">Ver detalhes</Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
           ))}
           
           {/* User location marker */}
