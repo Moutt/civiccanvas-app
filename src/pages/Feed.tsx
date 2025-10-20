@@ -8,6 +8,13 @@ import { useState } from "react";
 
 type FeedItemType = "issue" | "place" | "event";
 
+interface Comment {
+  id: number;
+  author: string;
+  text: string;
+  time: string;
+}
+
 interface FeedItem {
   id: number;
   type: FeedItemType;
@@ -25,6 +32,7 @@ interface FeedItem {
   priceLevel?: number;
   eventDate?: string;
   eventTime?: string;
+  commentsList: Comment[];
 }
 
 const mockFeedItems: FeedItem[] = [
@@ -40,6 +48,13 @@ const mockFeedItems: FeedItem[] = [
     date: "há 3 dias",
     status: "Em análise",
     category: "Infraestrutura",
+    commentsList: [
+      { id: 1, author: "João Silva", text: "Absurdo! Já reportei isso na prefeitura também e nada foi feito!", time: "há 2 horas" },
+      { id: 2, author: "Maria Santos", text: "Quase estraguei o pneu do meu carro ontem. Situação crítica!", time: "há 5 horas" },
+      { id: 3, author: "Pedro Costa", text: "Isso é um perigo! Alguém pode se machucar seriamente.", time: "há 1 dia" },
+      { id: 4, author: "Ana Oliveira", text: "Inadmissível a demora para resolver. Pagamos impostos para quê?", time: "há 1 dia" },
+      { id: 5, author: "Carlos Mendes", text: "Minha mãe idosa quase caiu aí. Precisa de providências urgentes!", time: "há 2 dias" },
+    ],
   },
   {
     id: 2,
@@ -55,6 +70,12 @@ const mockFeedItems: FeedItem[] = [
     rating: 4.8,
     reviews: 127,
     priceLevel: 2,
+    commentsList: [
+      { id: 1, author: "Julia Ferreira", text: "Melhor cappuccino da cidade! Vou lá todo final de semana.", time: "há 1 hora" },
+      { id: 2, author: "Roberto Lima", text: "Ambiente perfeito para trabalhar remotamente. Wi-Fi rápido e tomadas em todas as mesas.", time: "há 3 horas" },
+      { id: 3, author: "Camila Rocha", text: "Os croissants artesanais são divinos! Vale muito a pena.", time: "há 5 horas" },
+      { id: 4, author: "Fernando Souza", text: "Atendimento excelente e café espetacular. Já virei cliente frequente!", time: "há 1 dia" },
+    ],
   },
   {
     id: 3,
@@ -69,6 +90,13 @@ const mockFeedItems: FeedItem[] = [
     category: "Cultura",
     eventDate: "15 de Outubro",
     eventTime: "14h - 22h",
+    commentsList: [
+      { id: 1, author: "Lucas Martins", text: "Precisa comprar ingresso ou é entrada livre mesmo?", time: "há 30 minutos" },
+      { id: 2, author: "Beatriz Alves", text: "Alguém sabe se tem estacionamento no local? Vou de carro.", time: "há 1 hora" },
+      { id: 3, author: "Thiago Santos", text: "Qual o melhor horário para chegar e pegar um bom lugar?", time: "há 2 horas" },
+      { id: 4, author: "Patricia Dias", text: "Vou levar meus filhos. É adequado para crianças?", time: "há 4 horas" },
+      { id: 5, author: "Rafael Costa", text: "Tem restrição de idade? E pode levar comida de fora?", time: "há 5 horas" },
+    ],
   },
   {
     id: 4,
@@ -82,6 +110,12 @@ const mockFeedItems: FeedItem[] = [
     date: "há 1 dia",
     status: "Resolvido",
     category: "Espaços Públicos",
+    commentsList: [
+      { id: 1, author: "Mariana Silva", text: "Finalmente! Depois de tanto reclamar, fizeram a reforma. Era o mínimo.", time: "há 3 horas" },
+      { id: 2, author: "José Carlos", text: "Ficou bom, mas demoraram demais. Poderíamos ter isso há meses.", time: "há 6 horas" },
+      { id: 3, author: "Sandra Oliveira", text: "Que alegria ver a praça revitalizada! Obrigada prefeitura!", time: "há 12 horas" },
+      { id: 4, author: "Paulo Mendes", text: "Muito bom, mas agora precisam fazer manutenção regular.", time: "há 1 dia" },
+    ],
   },
   {
     id: 5,
@@ -97,6 +131,12 @@ const mockFeedItems: FeedItem[] = [
     rating: 4.6,
     reviews: 89,
     priceLevel: 3,
+    commentsList: [
+      { id: 1, author: "Daniela Costa", text: "Jantei lá ontem com meu marido. Massas incríveis e a vista é de tirar o fôlego!", time: "há 2 horas" },
+      { id: 2, author: "Marcos Pereira", text: "Recomendo o risotto de funghi. Melhor que já comi! Preço justo pela qualidade.", time: "há 4 horas" },
+      { id: 3, author: "Renata Souza", text: "Ambiente romântico perfeito para um encontro especial. Ótimo atendimento!", time: "há 1 dia" },
+      { id: 4, author: "Gustavo Lima", text: "Fui no almoço executivo. Excelente custo-benefício e pratos bem servidos.", time: "há 2 dias" },
+    ],
   },
   {
     id: 6,
@@ -111,6 +151,13 @@ const mockFeedItems: FeedItem[] = [
     category: "Comércio",
     eventDate: "Sábado e Domingo",
     eventTime: "9h - 18h",
+    commentsList: [
+      { id: 1, author: "Isabela Ramos", text: "Aceita cartão ou é só dinheiro?", time: "há 1 hora" },
+      { id: 2, author: "André Martins", text: "Qual melhor dia para ir? Sábado ou domingo? Fica muito lotado?", time: "há 2 horas" },
+      { id: 3, author: "Leticia Nunes", text: "Alguém sabe se tem produtos veganos? E aceita pets?", time: "há 3 horas" },
+      { id: 4, author: "Bruno Cavalcanti", text: "Tem opções de alimentação no local ou só os produtos artesanais?", time: "há 5 horas" },
+      { id: 5, author: "Vanessa Torres", text: "É cobrado entrada? E tem banheiro?", time: "há 6 horas" },
+    ],
   },
   {
     id: 7,
@@ -124,14 +171,14 @@ const mockFeedItems: FeedItem[] = [
     date: "há 5 dias",
     status: "Aguardando resposta",
     category: "Iluminação Pública",
+    commentsList: [
+      { id: 1, author: "Claudia Barros", text: "Inadmissível! Já liguei 3 vezes na prefeitura e nada de resolverem!", time: "há 4 horas" },
+      { id: 2, author: "Rogério Almeida", text: "Minha esposa não quer mais sair de noite. Isso é um convite para assaltos!", time: "há 1 dia" },
+      { id: 3, author: "Luiza Gomes", text: "Falta de compromisso total com a segurança dos cidadãos. Revoltante!", time: "há 2 dias" },
+    ],
   },
 ];
 
-const mockComments = [
-  { id: 1, author: "João Silva", text: "Já reportei isso na prefeitura também!", time: "há 2 horas" },
-  { id: 2, author: "Maria Santos", text: "Situação crítica mesmo", time: "há 5 horas" },
-  { id: 3, author: "Pedro Costa", text: "Obrigado por compartilhar!", time: "há 1 dia" },
-];
 
 const Feed = () => {
   const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
@@ -241,7 +288,7 @@ const Feed = () => {
                       <DialogTitle>Comentários - {item.title}</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 max-h-[400px] overflow-y-auto">
-                      {mockComments.map((comment) => (
+                      {item.commentsList.map((comment) => (
                         <div key={comment.id} className="space-y-1">
                           <div className="flex items-center justify-between">
                             <p className="font-semibold text-sm">{comment.author}</p>
