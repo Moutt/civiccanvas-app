@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { Image, Map, Camera } from "lucide-react";
+import { Image, Map, Star, Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const BottomNav = () => {
   const navItems = [
     { to: "/", icon: Image, label: "Feed" },
-    { to: "/map", icon: Map, label: "Mapa" },
+    { to: "/map", icon: Map, label: "Problemas" },
+    { to: "/recommendations", icon: Star, label: "Locais" },
     { to: "/report", icon: Camera, label: "Reportar" },
   ];
 

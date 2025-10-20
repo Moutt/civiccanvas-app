@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Feed from "./pages/Feed";
 import Map from "./pages/Map";
 import Report from "./pages/Report";
+import Recommendations from "./pages/Recommendations";
 import BottomNav from "./components/BottomNav";
 import NotFound from "./pages/NotFound";
 
@@ -21,6 +22,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Feed />} />
             <Route path="/map" element={<Map />} />
+            <Route path="/recommendations" element={<Recommendations />} />
             <Route path="/report" element={<Report />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
